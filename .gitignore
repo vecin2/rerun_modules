@@ -1,5 +1,6 @@
-# Object file
-*.o
+# Stubbs is part of the rerun project
+stubbs
 
-# Ada Library Information
-*.ali
+# Swap files
+*.swp
+*.swo
