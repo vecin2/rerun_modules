@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+#/ command: logs:vpl: "it opens in the default terminal editor the last modified process log"
+#/ usage: rerun logs:vpl [options]
+#/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option-variables: 
+
+
+. $RERUN_MODULE_DIR/lib/functions.sh vpl || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+set -o errexit -o nounset -o pipefail
+
+rerun_options_parse "$@"
+
+# Command implementation
+# ----------------------
+read_configuration
+last_modified_file=$(last_modified_file $PROCESS_LOGS)
+vi "$PROCESS_LOGS/$last_modified_file"
+# - - -
+# Put the command implementation here.
+# - - -
+
+# Done. Exit with last command exit status.
+exit $?
+

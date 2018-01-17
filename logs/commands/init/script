@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+#/ command: logs:init: "Initializes all the variables nedeed for this module. It can be run without arguments by running for folder that we want to configure."
+#/ usage: rerun logs:init [options]
+#/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option-variables: 
+
+. $RERUN_MODULE_DIR/lib/functions.sh init || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+set -o errexit -o nounset -o pipefail
+
+rerun_options_parse "$@"
+
+# Command implementation
+# ----------------------
+
+# - - -
+# Put the command implementation here.
+# - - -
+echo in init $(pwd)
+init
+# Done. Exit with last command exit status.
+exit $?
+

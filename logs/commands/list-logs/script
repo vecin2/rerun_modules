@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+#/ command: logs:list-logs: "it lists the logs path and the shorcut to each of them"
+#/ usage: rerun logs:list-logs [options]
+#/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option-variables: 
+
+. $RERUN_MODULE_DIR/lib/functions.sh list-logs || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+set -o errexit -o nounset -o pipefail
+
+rerun_options_parse "$@"
+
+# Command implementation
+# ----------------------
+
+# - - -
+# Put the command implementation here.
+# - - -
+echo $(rerun_color blue Local)
+echo $(rerun_color green Process logs:) "$PROCESS_LOGS"
+
+# Done. Exit with last command exit status.
+exit $?
+

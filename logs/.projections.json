@@ -1,0 +1,12 @@
+{
+	"
+	"*-test.sh": {
+		"alternate": "{}.sh",
+		"type": "test"
+	},
+	"*.sh": {
+		"alternate": "{dirname}/{basename}-test.sh",
+		"type": "source"
+	}
+}
+
