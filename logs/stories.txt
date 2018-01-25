@@ -1,4 +1,3 @@
-
 #Parametrize server
 x-computer server when pass as a parameter
 compute server from ccadmin.properties
