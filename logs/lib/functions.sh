@@ -25,7 +25,7 @@ fi
 # - - -
 
 init_variable () { 
-	if [ $# != 3 ]; then
+	if [ "$#" != "3" ]; then
 		rerun_args_error "name" "value" "file"
 		return 2
 	fi
@@ -35,17 +35,20 @@ echo "$var_name=$var_value" > $file
 }	# ----------  end of function init_variable  ----------
 read_property_value(){
 	if [ "$#" != "2" ]; then
-		rerun_args_error "property_name" "file"
+		rerun_args_error "file" "property_name" 
 	fi
-	machine_line=$(grep "ccadmin.machine.name" $ccadmin_properties_file)
-	MACHINE_NAME=${machine_line##*=}
-	MACHINE_NAME=$(echo $MACHINE_NAME|tr -d '\r')
+	local file property property_line result
+	file=$1 property=$2
+	property_line=$(grep "$property" $file)
+	result=${property_line##*=}
+	echo $result|tr -d '\r'
 }
 init_ccadmin_properties(){
 	[[ -n $MACHINE_NAME ]] && return 0
-	local ccadmin_properties_file machine_line
+	local ccadmin_properties_file
 	ccadmin_properties_file=$AD/config/ccadmin.properties
-	read_property_value 
+	MACHINE_NAME=$(read_property_value $ccadmin_properties_file \
+		                                 "ccadmin.machine.name")
 }
 init () {
 	AD=$(pwd)
