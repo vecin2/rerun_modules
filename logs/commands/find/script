@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+#/ command: logs:find: "It allow to find files within a directory by default selects the last modified"
+#/ usage: rerun logs:find  --folder <> [ --name|-n <>] 
+#/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option-variables: FOLDER NAME
+
+. "$RERUN_MODULE_DIR/lib/functions.sh" "find" || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+set -o errexit -o nounset -o pipefail
+
+rerun_options_parse "$@"
+
+# Command implementation
+# ----------------------
+
+# - - -
+# Put the command implementation here.
+# - - -
+
+add_filter(){
+	exp="$exp | $1"
+}
+
+exp='ls -ltr $FOLDER | rev | cut -d " " -f1 | rev'
+
+# If name is passed
+[[ ! -z "$NAME" ]] && add_filter "grep $NAME"
+
+# Alway get the last modified
+add_filter "tail -1"
+
+eval "$exp"
+
+
+
