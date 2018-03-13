@@ -1,0 +1,8 @@
+./localhost-container_ad_1/weblogic
+./localhost-container_ad_1/cre/session
+./localhost-container_ad_1/cre/session/webclient
+./localhost-container_ad_1/cre/session/channelproviders
+./localhost-container_ad_1/cre/session/channelproviders/textchat
+./localhost-container_ad_1/cre/session/channelproviders/workflow
+./localhost-container_ad_1/cre/session/process
+./localhost-container_ad_1/cre/session/migration
