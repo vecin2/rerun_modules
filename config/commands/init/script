@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+#/ command: config:init: "it initializes config in pwd folder and it sets default core.home to pwd"
+#/ usage: rerun config:init [options]
+#/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option-variables: 
+
+. "$RERUN_MODULE_DIR/lib/functions.sh" "init" || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+set -o errexit -o nounset -o pipefail
+
+rerun_options_parse "$@"
+
+# Command implementation
+# ----------------------
+
+# - - -
+# Put the command implementation here.
+# - - -
+export EM_CORE_HOME=$(pwd)
+
+
+install_shell_tools ()
+{
+	if [ ! -d "$EM_CORE_HOME/shell_tools" ]; then
+		echo cloning shell_tools
+		git clone https://github.com/vecin2/shell_tools
+	else
+		echo "shell_tools already exist skipping clone git repo"
+	fi
+	
+}	# ----------  end of function install_shell_tools  ----------
+
+install_ccadmin_autocompletion ()
+{
+	CCADMIN_COMPLETION_OPTS=$($EM_CORE_HOME/shell_tools/ccadmin.sh  | grep "\[echo\]" | grep -v ":" | awk '{print $2}' | tr  '\n' ' ')
+
+	auto_completion_dir=.em/autocompletion
+	mkdir -p "$auto_completion_dir"
+	echo "$CCADMIN_COMPLETION_OPTS" > "$auto_completion_dir"/ccadmin_completion
+
+	"$EM_CORE_HOME"/shell_tools/autocompletion/install-autocompletion.sh
+}	# ----------  end of function install_ccadmin_autocompletion  ----------
+
+config_path=$(create_config_file "$@")
+
+install_shell_tools
+
+install_ccadmin_autocompletion
+
+
+echo "$config_path" updated
+
+# Done. Exit with last command exit status.
+exit $?
+

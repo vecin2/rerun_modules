@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+#/ command: config:install-auto-completion: "it"
+#/ usage: rerun config:install-auto-completion [options]
+#/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option-variables: 
+
+. "$RERUN_MODULE_DIR/lib/functions.sh" "install-auto-completion" || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+set -o errexit -o nounset -o pipefail
+
+rerun_options_parse "$@"
+
+# Command implementation
+# ----------------------
+
+# - - -
+# Put the command implementation here.
+# - - -
+
+
+install_ccadmin_autocompletion ()
+{
+	CCADMIN_COMPLETION_OPTS=$($EM_CORE_HOME/shell_tools/ccadmin.sh  | grep "\[echo\]" | grep -v ":" | awk '{print $2}' | tr  '\n' ' ')
+
+	auto_completion_dir=.em/autocompletion
+	mkdir -p "$auto_completion_dir"
+	echo "$CCADMIN_COMPLETION_OPTS" > "$auto_completion_dir"/ccadmin_completion
+
+	"$EM_CORE_HOME"/shell_tools/autocompletion/install-autocompletion.sh
+}	# ----------  end of function install_ccadmin_autocompletion  ----------
+
+install_ccadmin_autocompletion
+
+# Done. Exit with last command exit status.
+exit $?
+

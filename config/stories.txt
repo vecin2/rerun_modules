@@ -1,0 +1,6 @@
+
+
+rr config:init
+	it_autosets_log_path_from_container_name
+	it_gives_an_error_if_container_is_not_passed
+	*it_sets_ad_shorcut
