@@ -1,26 +1,50 @@
 #!/usr/bin/env bash
 
 #/ command: logs:list-logs: "it lists the logs path and the shorcut to each of them"
-#/ usage: rerun logs:list-logs [options]
+#/ usage: rerun logs:list-logs  --machine_name <>  --container_name <> 
 #/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
-#/ option-variables: 
+#/ option-variables: MACHINE_NAME CONTAINER_NAME
 
 . $RERUN_MODULE_DIR/lib/functions.sh list-logs || { 
   echo >&2 "Failed loading function library." ; exit 1 ; 
 }
 
+. $RERUN_MODULES/logs/lib/configurator.sh
+
 set -o errexit -o nounset -o pipefail
 
 rerun_options_parse "$@"
 
-# Command implementation
+# Functions
 # ----------------------
+
+print_log_path ()
+{
+	echo $(rerun_color green "$1":) "$2"
+}	# ----------  end of function print_log_path  ----------
+
 
 # - - -
 # Put the command implementation here.
 # - - -
-echo $(rerun_color blue Local)
-echo $(rerun_color green Process logs:) "$PROCESS_LOGS"
+read_ccadmin_properties || true
+
+if ! read_configuration; then
+	exit
+fi
+
+if [ -z $MACHINE_NAME ] || [ -z $CONTAINER_NAME ]; then
+	rerun_log error "'container_name' or 'machine_name' not initialized."
+  rerun_log error "Please pass  pass them or make sure they are set within ccadmin.properties"
+	exit 1
+fi
+
+echo $(rerun_color blue "List Of the Logs Configured")
+
+log_lines=$(cat $(path_to_config) | grep _LOGS)
+while read line ; do
+	print_log_path "$(formated_var_name "$line")" "$(var_value "$line")"
+done <<< "$log_lines"
 
 # Done. Exit with last command exit status.
 exit $?

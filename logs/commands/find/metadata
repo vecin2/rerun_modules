@@ -3,5 +3,5 @@
 # Tue  6 Mar 22:43:12 GMT 2018
 NAME=find
 DESCRIPTION="It allow to find files within a directory by default selects the last modified"
-OPTIONS="folder name"
+OPTIONS="folder name type"
 GENERATE_HELP="true"

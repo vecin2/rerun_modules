@@ -3,5 +3,5 @@
 # Sat 13 Jan 09:50:35 GMT 2018
 NAME=init
 DESCRIPTION="Initializes all the variables nedeed for this module. It can be run without arguments by running for folder that we want to configure."
-OPTIONS="machine_name"
+OPTIONS="machine_name container_name process"
 GENERATE_HELP="true"

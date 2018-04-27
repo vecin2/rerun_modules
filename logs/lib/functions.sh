@@ -20,19 +20,22 @@ then
 }
 fi
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $DIR/configurator.sh
+
 # - - -
 # Your functions declared here.
 # - - -
 
-init_variable () { 
+add_config_variable () { 
 	if [ "$#" != "3" ]; then
 		rerun_args_error "name" "value" "file"
 		return 2
 	fi
+	local var_name=$1 var_value=$2 file=$3
+	echo "$var_name=$var_value" >> $file
+}	# ----------  end of function add_config_variable  ----------
 
-local var_name=$1 var_value=$2 file=$3
-echo "$var_name=$var_value" > $file
-}	# ----------  end of function init_variable  ----------
 read_property_value(){
 	if [ "$#" != "2" ]; then
 		rerun_args_error "file" "property_name" 
@@ -41,38 +44,49 @@ read_property_value(){
 	file=$1 property=$2
 	property_line=$(grep "$property" $file)
 	result=${property_line##*=}
+	#remove windows return carriage character
 	echo $result|tr -d '\r'
 }
+
 init_ccadmin_properties(){
-	[[ -n $MACHINE_NAME ]] && return 0
 	local ccadmin_properties_file
 	ccadmin_properties_file=$AD/config/ccadmin.properties
-	MACHINE_NAME=$(read_property_value $ccadmin_properties_file \
-		                                 "ccadmin.machine.name")
+	if [[ -z $MACHINE_NAME ]]; then
+		MACHINE_NAME=$(read_property_value $ccadmin_properties_file \
+			"ccadmin.machine.name")
+	fi
+	if [[ -z $CONTAINER_NAME ]]; then
+		CONTAINER_NAME=$(read_property_value $ccadmin_properties_file \
+			"ccadmin.container.name")
+	fi
 }
 init () {
+	if [ -f ".gt/config.sh" ]; then
+		rm ".gt/config.sh";
+	fi
 	AD=$(pwd)
-	mkdir -p .gt
-	init_ccadmin_properties
-	init_variable "PROCESS_LOGS" "$AD/logs/${MACHINE_NAME}-container_ad_1/cre/session/process" ".gt/config.sh"
+	if [[ ! -f "$AD/config/ccadmin.properties" && -z ${MACHINE_NAME:=} ]]; then
+		local error="Please pass ccadmin properties or create config/ccadmin.properties"
+		rerun_log error $error
+		return 1
+	else
+		mkdir -p .gt
+		init_ccadmin_properties
+		add_config_variable "PROCESS_LOGS" "$AD/logs/${MACHINE_NAME}-${CONTAINER_NAME}/cre/session/process" ".gt/config.sh"
+		add_config_variable "APP_LOGS" "$AD/logs/${MACHINE_NAME}-${CONTAINER_NAME}/cre/session/application" ".gt/config.sh"
+		add_config_variable "SERVER_LOGS" "$AD/logs/${MACHINE_NAME}-${CONTAINER_NAME}/weblogic" ".gt/config.sh"
+		rerun_color blue "Project initialised, showing \".gt/config.sh\" content:\n"
+		cat ".gt/config.sh" 
+	fi
 }	# ----------  end of function init  ----------
 
-read_config_on_pwd(){
-	config_file=".gt/config.sh"
-	[[ -f $config_file ]] && . $config_file && return 0
-return 1
-}
-
 read_configuration(){
-	local pwd
-	pwd=$(pwd)
-	parent=${pwd}
-	while [ ! -z "$parent" ]; do
-		[[ -d $parent/.gt ]] && read_config_on_pwd && return 0
-		parent=${parent%/*}
-		cd $parent
-	done
-	rerun_log error  "Project has not being initialized. Run init in the home directory before read configuration"
+	path=$(path_to_config)
+	if [ -z $path ]; then
+		rerun_log error  "Project has not being initialized. Run init in the home directory before read configuration"
+		return 1
+	fi
+	. $path
 }
 
 last_modified_file(){

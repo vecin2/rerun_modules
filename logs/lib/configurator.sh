@@ -1,11 +1,13 @@
 #!/bin/bash
+
 config_path=".gt/config.sh"
+
 rerun_args_error ()
 {
-	echo ******************************************************************************************************
 	rerun_color red  "wrong #args, invocation should be '${FUNCNAME[1]} "$@"'\n"
 	return 1
 }
+
 find_file_on_ancesters() { 
 	dir_name=$1
 	file_name=$2
@@ -20,8 +22,12 @@ find_file_on_ancesters() {
 	fi
 } 
 
+find_in_parent(){
+	echo $(find_file_on_ancesters "$(pwd)" "$1")
+}
+
 path_to_config(){
-	echo $(find_file_on_ancesters "$(pwd)" "$config_path")
+	echo $(find_in_parent "$config_path")
 }
 
 add_config_variable () { 
@@ -43,5 +49,46 @@ init_config(){
 		add_config_variable "SERVER_LOGS" "$AD/logs/${MACHINE_NAME}-${CONTAINER_NAME}/weblogic"
 }
 
+read_property_value(){
+	local file property property_line result
+	file=$1 property=$2
+	property_line=$(grep "$property" $file)
+	result=${property_line##*=}
+	#remove windows return carriage character
+	echo $result|tr -d '\r'
+}
 
+read_ccadmin_properties(){
+	local ccadmin_properties_file
+	ccadmin_properties_file=$(find_in_parent "config/ccadmin.properties")
+	if [ ! -f $ccadmin_properties_file ]; then
+		return 1
+	fi
+	if [[ -z ${MACHINE_NAME:=} ]]; then
+		MACHINE_NAME=$(read_property_value $ccadmin_properties_file \
+			"ccadmin.machine.name")
+	fi
+	if [[ -z ${CONTAINER_NAME:=} ]]; then
+		CONTAINER_NAME=$(read_property_value $ccadmin_properties_file \
+			"ccadmin.container.name")
+	fi
+}
+var_name(){
+	local line="$1"
+	local var_name="${line%%=*}"
+	echo ${var_name##* }
+}
 
+formated_var_name(){
+	local line="$1"
+	local var_name=$(var_name "$line")
+	log_name=$(echo "${var_name/_/ }" | awk '{print tolower($0)}' \
+							| sed -r 's/(^| )([a-z])/ \U\2/g')
+	echo "$log_name"
+}
+
+var_value(){
+	line="$1"
+	var_name=$(var_name "$line")
+	echo "${!var_name}"
+}

@@ -4,7 +4,7 @@
 NAME=container_name
 DESCRIPTION="machine name es por example"
 ARGUMENTS=true
-REQUIRED=true
+REQUIRED=false
 SHORT=
 LONG=container_name
 DEFAULT=

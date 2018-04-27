@@ -1,0 +1,120 @@
+2018-01-12 10:04:31,103 INFO  CU001:User agent is running against release 
+2018-01-12 10:04:31,103 DEBUG Obtained the GTProcessEngineEJB
+2018-01-12 10:04:31,107 DEBUG RouterInterface is set
+2018-01-12 10:04:31,109 DEBUG BrokerInterface:com.gtnet.common.broker.JNIBrokerLink@158e5027 is set on processEngineEJB
+2018-01-12 10:04:31,111 DEBUG constructing PBXInterface
+2018-01-12 10:04:31,111 INFO  Instantiating PBX instance: com.gtnet.pbx.asterisk.AsteriskPBX
+2018-01-12 10:04:31,111 DEBUG PBXInterface is set
+2018-01-12 10:04:31,134 DEBUG Creating event queues
+2018-01-12 10:04:31,134 DEBUG Creating QueueObserver
+2018-01-12 10:04:31,134 DEBUG Creating event queue for client requests
+2018-01-12 10:04:31,134 DEBUG Creating event queue for debug requests
+2018-01-12 10:04:31,134 DEBUG Creating event queue for standard events
+2018-01-12 10:04:31,134 DEBUG Checking for JMS...
+2018-01-12 10:04:31,134 DEBUG JMS not required
+2018-01-12 10:04:31,134 DEBUG Initialising the GTProcessEngine
+2018-01-12 10:04:43,014 TRACE PDP000:Pulling from [parameterMap], value [Object[GT.Runtime.DefaultDocuments.GTObject]], to [parameterMap], on process [ChildReference: 98cdf65a:displayChannelToolbar(FrameworkEVA.Implementation.Invocation.Processes.VerbInvoker)]
+2018-01-12 10:04:43,018 ERROR EXCP:ExceptionOccured
+2018-01-12 10:04:43,018 ERROR com.gtnet.common.bpd.base.initialise.InitialisationException: View Definition CoreChannels.Implementation.Toolbar.UI.Views.ChannelAvailabilityStateView Record type named ChannelAvailabilityState is not in ListDefinition ChannelAvailabilityStateList
+	at com.gtnet.common.bpd.base.initialise.ViewDefinitionInitialiser.initialise(ViewDefinitionInitialiser.java:86)
+	at com.gtnet.common.bpd.base.ViewDefinition.initialiseDefinition(ViewDefinition.java:84)
+	at com.gtnet.common.bpd.base.Definition.runInitialisationLoop(Definition.java:156)
+	at com.gtnet.common.bpd.base.Definition.synchedInitialise(Definition.java:128)
+	at com.gtnet.common.bpd.base.Definition.initialise(Definition.java:100)
+	at com.gtnet.bpd.runtime.IncrementalLoader.initialiseDefinition(IncrementalLoader.java:262)
+	at com.gtnet.bpd.runtime.IncrementalLoader.loadTypeDefinition(IncrementalLoader.java:205)
+	at com.gtnet.bpd.runtime.EditDebugLocator.loadDefinition(EditDebugLocator.java:1309)
+	at com.gtnet.bpd.runtime.EditDebugLocator.validateUnvalidatedDefinition(EditDebugLocator.java:1283)
+	at com.gtnet.bpd.runtime.EditDebugLocator.validateDefinition(EditDebugLocator.java:1269)
+	at com.gtnet.bpd.runtime.EditDebugLocator.findQualifiedObject(EditDebugLocator.java:242)
+	at com.gtnet.bpd.runtime.EditDebugLocator.findQualifiedTypeDefinition(EditDebugLocator.java:109)
+	at com.gtnet.pk.ecmas.extensions.GtEvaluator.lookupProcess(GtEvaluator.java:922)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.findProcess(ProcessRunnerPrototype.java:194)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.createProcessRunnerProcess(ProcessRunnerPrototype.java:145)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.putProperty(ProcessRunnerPrototype.java:130)
+	at com.gtnet.pk.ecmas.extensions.ProcessDefinitionPrototype.pullDataFlowEntry(ProcessDefinitionPrototype.java:1145)
+	at com.gtnet.pk.ecmas.extensions.VerbInvokerWrapper.pullDataFlowEntry(VerbInvokerWrapper.java:904)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.initialiseDataFlows(ProcessRunnerPrototype.java:354)
+	at com.gtnet.pk.ecmas.extensions.ProcessDefinitionPrototype.onEntry(ProcessDefinitionPrototype.java:393)
+	at com.gtnet.pk.ecmas.extensions.ProcessDefinitionPrototype.onEntry(ProcessDefinitionPrototype.java:389)
+	at com.gtnet.pk.nav.ChildReference.enteringTree(ChildReference.java:856)
+	at com.gtnet.pk.nav.ProcessTree.enterTreeNode(ProcessTree.java:756)
+	at com.gtnet.pk.nav.KernelSession.runUntilGuarded(KernelSession.java:2646)
+	at com.gtnet.pk.nav.KernelSession.runOnEvent(KernelSession.java:1870)
+	at com.gtnet.pk.nav.KernelSession.handleEventImpl(KernelSession.java:1677)
+	at com.gtnet.pk.nav.KernelSession.processQueue(KernelSession.java:1631)
+	at com.gtnet.pk.nav.KernelSession.handleEvent(KernelSession.java:1609)
+	at com.gtnet.pk.comms.ClientSession.handleClientEvent(ClientSession.java:2254)
+	at com.gtnet.pk.comms.web.WebClientSession.handleClientEvent(WebClientSession.java:155)
+	at com.gtnet.pk.comms.ClientSession.clientEventTransportablesReceived(ClientSession.java:1715)
+	at com.gtnet.pk.comms.ClientSession.onInput(ClientSession.java:1740)
+	at com.gtnet.pk.comms.web.WebClientSession.onInput(WebClientSession.java:456)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB.sendInput(GTProcessEngineEJB.java:323)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB.onInput(GTProcessEngineEJB.java:279)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB_m93she_EOImpl.__WL_invoke(Unknown Source)
+	at weblogic.ejb.container.internal.SessionRemoteMethodInvoker.invoke(SessionRemoteMethodInvoker.java:34)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB_m93she_EOImpl.onInput(Unknown Source)
+	at com.gtnet.j2ee.comms.SynchronisedProcessEngine.onInput(SynchronisedProcessEngine.java:137)
+	at com.gtnet.j2ee.comms.ClientController.onInput(ClientController.java:50)
+	at com.gtnet.j2ee.comms.TransportableEventProcessor.processEvent(TransportableEventProcessor.java:61)
+	at com.gtnet.httpClient.events.AJAXEventProcessor.processEvent(AJAXEventProcessor.java:89)
+	at com.gtnet.j2ee.comms.UniversalController.pumpOneEvent(UniversalController.java:1105)
+	at com.gtnet.j2ee.comms.UniversalController.processEventQueue(UniversalController.java:1087)
+	at com.gtnet.j2ee.comms.UniversalController.pumpEvents(UniversalController.java:1062)
+	at com.gtnet.j2ee.comms.UniversalController.eventProcessingLoop(UniversalController.java:1639)
+	at com.gtnet.j2ee.comms.UniversalController.run(UniversalController.java:1594)
+	at java.lang.Thread.run(Thread.java:745)
+
+2018-01-12 10:04:43,018 ERROR View Definition CoreChannels.Implementation.Toolbar.UI.Views.ChannelAvailabilityStateView Record type named ChannelAvailabilityState is not in ListDefinition ChannelAvailabilityStateList
+com.gtnet.common.bpd.base.initialise.InitialisationException: View Definition CoreChannels.Implementation.Toolbar.UI.Views.ChannelAvailabilityStateView Record type named ChannelAvailabilityState is not in ListDefinition ChannelAvailabilityStateList
+	at com.gtnet.common.bpd.base.initialise.ViewDefinitionInitialiser.initialise(ViewDefinitionInitialiser.java:86)
+	at com.gtnet.common.bpd.base.ViewDefinition.initialiseDefinition(ViewDefinition.java:84)
+	at com.gtnet.common.bpd.base.Definition.runInitialisationLoop(Definition.java:156)
+	at com.gtnet.common.bpd.base.Definition.synchedInitialise(Definition.java:128)
+	at com.gtnet.common.bpd.base.Definition.initialise(Definition.java:100)
+	at com.gtnet.bpd.runtime.IncrementalLoader.initialiseDefinition(IncrementalLoader.java:262)
+	at com.gtnet.bpd.runtime.IncrementalLoader.loadTypeDefinition(IncrementalLoader.java:205)
+	at com.gtnet.bpd.runtime.EditDebugLocator.loadDefinition(EditDebugLocator.java:1309)
+	at com.gtnet.bpd.runtime.EditDebugLocator.validateUnvalidatedDefinition(EditDebugLocator.java:1283)
+	at com.gtnet.bpd.runtime.EditDebugLocator.validateDefinition(EditDebugLocator.java:1269)
+	at com.gtnet.bpd.runtime.EditDebugLocator.findQualifiedObject(EditDebugLocator.java:242)
+	at com.gtnet.bpd.runtime.EditDebugLocator.findQualifiedTypeDefinition(EditDebugLocator.java:109)
+	at com.gtnet.pk.ecmas.extensions.GtEvaluator.lookupProcess(GtEvaluator.java:922)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.findProcess(ProcessRunnerPrototype.java:194)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.createProcessRunnerProcess(ProcessRunnerPrototype.java:145)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.putProperty(ProcessRunnerPrototype.java:130)
+	at com.gtnet.pk.ecmas.extensions.ProcessDefinitionPrototype.pullDataFlowEntry(ProcessDefinitionPrototype.java:1145)
+	at com.gtnet.pk.ecmas.extensions.VerbInvokerWrapper.pullDataFlowEntry(VerbInvokerWrapper.java:904)
+	at com.gtnet.pk.ecmas.extensions.ProcessRunnerPrototype.initialiseDataFlows(ProcessRunnerPrototype.java:354)
+	at com.gtnet.pk.ecmas.extensions.ProcessDefinitionPrototype.onEntry(ProcessDefinitionPrototype.java:393)
+	at com.gtnet.pk.ecmas.extensions.ProcessDefinitionPrototype.onEntry(ProcessDefinitionPrototype.java:389)
+	at com.gtnet.pk.nav.ChildReference.enteringTree(ChildReference.java:856)
+	at com.gtnet.pk.nav.ProcessTree.enterTreeNode(ProcessTree.java:756)
+	at com.gtnet.pk.nav.KernelSession.runUntilGuarded(KernelSession.java:2646)
+	at com.gtnet.pk.nav.KernelSession.runOnEvent(KernelSession.java:1870)
+	at com.gtnet.pk.nav.KernelSession.handleEventImpl(KernelSession.java:1677)
+	at com.gtnet.pk.nav.KernelSession.processQueue(KernelSession.java:1631)
+	at com.gtnet.pk.nav.KernelSession.handleEvent(KernelSession.java:1609)
+	at com.gtnet.pk.comms.ClientSession.handleClientEvent(ClientSession.java:2254)
+	at com.gtnet.pk.comms.web.WebClientSession.handleClientEvent(WebClientSession.java:155)
+	at com.gtnet.pk.comms.ClientSession.clientEventTransportablesReceived(ClientSession.java:1715)
+	at com.gtnet.pk.comms.ClientSession.onInput(ClientSession.java:1740)
+	at com.gtnet.pk.comms.web.WebClientSession.onInput(WebClientSession.java:456)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB.sendInput(GTProcessEngineEJB.java:323)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB.onInput(GTProcessEngineEJB.java:279)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB_m93she_EOImpl.__WL_invoke(Unknown Source)
+	at weblogic.ejb.container.internal.SessionRemoteMethodInvoker.invoke(SessionRemoteMethodInvoker.java:34)
+	at com.gtnet.j2ee.components.ejb.GTProcessEngineEJB_m93she_EOImpl.onInput(Unknown Source)
+	at com.gtnet.j2ee.comms.SynchronisedProcessEngine.onInput(SynchronisedProcessEngine.java:137)
+	at com.gtnet.j2ee.comms.ClientController.onInput(ClientController.java:50)
+	at com.gtnet.j2ee.comms.TransportableEventProcessor.processEvent(TransportableEventProcessor.java:61)
+	at com.gtnet.httpClient.events.AJAXEventProcessor.processEvent(AJAXEventProcessor.java:89)
+	at com.gtnet.j2ee.comms.UniversalController.pumpOneEvent(UniversalController.java:1105)
+	at com.gtnet.j2ee.comms.UniversalController.processEventQueue(UniversalController.java:1087)
+	at com.gtnet.j2ee.comms.UniversalController.pumpEvents(UniversalController.java:1062)
+	at com.gtnet.j2ee.comms.UniversalController.eventProcessingLoop(UniversalController.java:1639)
+	at com.gtnet.j2ee.comms.UniversalController.run(UniversalController.java:1594)
+	at java.lang.Thread.run(Thread.java:745)
+2018-01-12 10:04:43,058 TRACE PDP000:Pulling from [processToRun], value [CoreChannels.Implementation.Toolbar.Processes.Toolbar], to [toRun], on process [ChildReference: 98cdf65a:displayChannelToolbar(FrameworkEVA.Implementation.Invocation.Processes.VerbInvoker)]
+2018-01-12 10:04:43,058 TRACE PDP000:Pulling from [configEntity], value [null], to [configEntity], on process [ChildReference: 98cdf65a:displayChannelToolbar(FrameworkEVA.Implementation.Invocation.Processes.VerbInvoker)]
+2018-01-12 10:08:57,784 DEBUG Event Processor loop waiting ...

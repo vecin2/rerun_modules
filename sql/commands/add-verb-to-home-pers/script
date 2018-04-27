@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-#/ command: logs:vpl: "it opens in the default terminal editor the last modified process log"
-#/ usage: rerun logs:vpl [options]
+#/ command: sql:add-verb-to-home-pers: "adds"
+#/ usage: rerun sql:add-verb-to-home-pers [options]
 #/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
 #/ option-variables: 
 
-
-. $RERUN_MODULE_DIR/lib/functions.sh vpl || { 
+. "$RERUN_MODULE_DIR/lib/functions.sh" "add-verb-to-home-pers" || { 
   echo >&2 "Failed loading function library." ; exit 1 ; 
 }
 
@@ -16,9 +15,7 @@ rerun_options_parse "$@"
 
 # Command implementation
 # ----------------------
-read_configuration
-last_modified_file=$(last_modified_file $PROCESS_LOGS)
-vi "$PROCESS_LOGS/$last_modified_file"
+
 # - - -
 # Put the command implementation here.
 # - - -

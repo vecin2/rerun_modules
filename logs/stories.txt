@@ -1,4 +1,69 @@
-#Parametrize server
-x-computer server when pass as a parameter
-compute server from ccadmin.properties
-if not ccadmin.properties error
+init repository	
+	It should set core home
+        #it should create .gt/config.sh file 
+init repository overrides default repository
+	it should override core.home
+	
+		
+List proces logs paths
+View proces log
+	--it should display the process log within folder
+	--it should display last proces log
+view application log
+
+view server log
+
+
+tail server log
+
+INIT
+	#Parametrize server
+	x-compute server when pass as a parameter
+	x-compute server from ccadmin.properties
+	?-* if not ccadmin.properties error--> how to test error condition
+
+	x Initialise ccadmin properties only if the variable is not passed as a parameter
+
+	**Issue when testing return non zero.
+	it_fails_if_prop_not_passed_and_ccadmin_not_exist
+	If the assertion (e.g test -a $expected = $ouput) passses then passed. Good!
+	However if it fails it does not give error message test-a "hola" ="holas". 
+	Instead if fails with return non zero return code non descriptive. 
+	Check basht or shunit!!
+
+run command on log:
+rr logs: run --view --process-logs --last-mod -1
+vs:
+rr logs: view --type process-logs --last-mod (default if not specified is last-mod)
+
+rr logs: run --view --app_logs --last  --key-word  ERROR
+	if "key-word" open and find
+rr logs: run --tail --process_logs --last-mod
+rr logs: run --list --process_logs 
+rr logs: run --t --process_logs
+If not parameter pass more than path then worth: ls $PROCESS_LOGS
+which means added to .profile file otherwise run init everytime you log in/restart computer
+
+Other features
+add new log path
+remove log path
+list log paths
+
+Decide type approcach versus parameter:
+Type implemented once valid for all commands
+Paremeter approach needs to add a parameter to each command (view, tail, t, list)
+
+
+VPL
+	Add last-modified -1
+
+List-logs
+	rr logs: path --process 
+	rr logs: path --application
+	list process logs
+	view server logs
+		create fake project for testing or check exact match or folder
+		test by checking folder exists
+VSL
+VAL
+

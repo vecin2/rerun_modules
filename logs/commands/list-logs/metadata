@@ -3,5 +3,5 @@
 # Fri  5 Jan 15:29:46 GMT 2018
 NAME=list-logs
 DESCRIPTION="it lists the logs path and the shorcut to each of them"
-OPTIONS=
+OPTIONS="machine_name container_name"
 GENERATE_HELP="true"

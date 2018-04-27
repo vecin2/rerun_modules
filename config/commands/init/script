@@ -33,22 +33,16 @@ install_shell_tools ()
 	
 }	# ----------  end of function install_shell_tools  ----------
 
-install_ccadmin_autocompletion ()
-{
-	CCADMIN_COMPLETION_OPTS=$($EM_CORE_HOME/shell_tools/ccadmin.sh  | grep "\[echo\]" | grep -v ":" | awk '{print $2}' | tr  '\n' ' ')
-
-	auto_completion_dir=.em/autocompletion
-	mkdir -p "$auto_completion_dir"
-	echo "$CCADMIN_COMPLETION_OPTS" > "$auto_completion_dir"/ccadmin_completion
-
-	"$EM_CORE_HOME"/shell_tools/autocompletion/install-autocompletion.sh
-}	# ----------  end of function install_ccadmin_autocompletion  ----------
 
 config_path=$(create_config_file "$@")
 
+#prepend core_home = current directory
+EM_CORE_HOME=$(pwd)
+sed -i "1iexport EM_CORE_HOME=$EM_CORE_HOME" "$config_path"
+
 install_shell_tools
 
-install_ccadmin_autocompletion
+
 
 
 echo "$config_path" updated

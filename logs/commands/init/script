@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 #/ command: logs:init: "Initializes all the variables nedeed for this module. It can be run without arguments by running for folder that we want to configure."
-#/ usage: rerun logs:init [ --machine_name|-mn <>] 
+#/ usage: rerun logs:init [ --machine_name|-mn <>] [ --container_name <>] [ --process] 
 #/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
-#/ option-variables: MACHINE_NAME
+#/ option-variables: MACHINE_NAME CONTAINER_NAME PROCESS
 
 . $RERUN_MODULE_DIR/lib/functions.sh init || { 
   echo >&2 "Failed loading function library." ; exit 1 ; 

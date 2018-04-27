@@ -30,7 +30,7 @@ it_initialize_file_passed() {
 it_initialize_em_config_file_if_no_file_passed(){
 	default_config_path="${HOME}/.em.bash"
 
-	local output_init=$(create_config_file "$test_default_config_path")
+	local output_init=$(get_config_file)
 
 	test "$default_config_path" == "${output_init}"
 }

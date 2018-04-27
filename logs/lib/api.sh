@@ -17,7 +17,6 @@
 #      REVISION:  ---
 #===============================================================================
 
-set -o nounset                              # Treat unset variables as an error
 
 vpl(){
 	vi $(rr logs: find --folder "$EM_PROCESS_LOGS")

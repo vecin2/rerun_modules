@@ -24,13 +24,19 @@ fi
 # Your functions declared here.
 # - - -
 
-create_config_file ()
-{
+get_config_file(){
 	if [ ! -z "${1:-}" ]; then
 		config_path="$1"
 	else
 		config_path="${HOME}/.em.bash"
 	fi
+	echo "${config_path}"
+}
+
+create_config_file ()
+{
+	
+	config_path=$(get_config_file ${1:-})
 	source_dir="$RERUN_MODULES"/config/lib
 	
 	template_path="$source_dir"/init-template.sh
