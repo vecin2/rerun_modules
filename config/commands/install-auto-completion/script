@@ -23,13 +23,14 @@ rerun_options_parse "$@"
 
 install_ccadmin_autocompletion ()
 {
-	CCADMIN_COMPLETION_OPTS=$($EM_CORE_HOME/shell_tools/ccadmin.sh  | grep "\[echo\]" | grep -v ":" | awk '{print $2}' | tr  '\n' ' ')
+	CCADMIN_COMPLETION_OPTS=$($EM_CORE_HOME/bin/ccadmin.sh  | grep "\[echo\]" | grep -v ":" | awk '{print $2}' | tr  '\n' ' ')
 
 	auto_completion_dir=.em/autocompletion
 	mkdir -p "$auto_completion_dir"
 	echo "$CCADMIN_COMPLETION_OPTS" > "$auto_completion_dir"/ccadmin_completion
 
-	"$EM_CORE_HOME"/shell_tools/autocompletion/install-autocompletion.sh
+	sudo ln -sfv $RERUN_MODULES/config/commands/install-auto-completion/ccadmin.sh /etc/bash_completion.d/ccadmin
+	sudo ln -sfv $RERUN_MODULES/config/commands/install-auto-completion/gt.sh /etc/bash_completion.d/gt
 }	# ----------  end of function install_ccadmin_autocompletion  ----------
 
 install_ccadmin_autocompletion

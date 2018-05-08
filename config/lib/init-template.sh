@@ -28,8 +28,10 @@ as_kill_all(){
 
 ad_restart(){
   ad_kill
+	ccadmin stop-appserver -Dcontainer.name=authentication-service
 	sleep 2s
 	ccadmin start-appserver -Dcontainer.name=ad
+	ccadmin start-appserver -Dcontainer.name=authentication-service
 }
 
 ## modules-sql
@@ -38,8 +40,23 @@ modules_rev_number(){
 	echo $MODULES_REV_NUMBER
 }
 
+modules_set_db_rev_no(){
+	echo Max rev number in modules:$(modules_rev_number)
+	EM_PYTHON_HOME=$HOME/dev/python/em_dev_tools/my_project
+	EM_PYTHON="$EM_PYTHON_HOME"/bin/python
+	PY_MODULES_HOME=$EM_PYTHON_HOME/repository/modules/
+
+	$EM_PYTHON $PY_MODULES_HOME/database.py $1
+}
+
+#ced
 ced_kill(){
-	kill -9 $(ps -ef | grep java | grep ../lib/Toolbox.jar | awk '{print $2}')
+	process_id=$(ps -ef | grep java | grep ../lib/Toolbox.jar | awk '{print $2}')
+	if [ -z "$process_id" ]; then
+		echo "ced is not running"
+	else
+		kill -9 $process_id
+	fi
 }
 
 ced_restart(){
@@ -50,4 +67,24 @@ ced_restart(){
 show_config(){
 	ccadmin show-config
 	gnome-open "$EM_CORE_HOME/work/config/show-config-html/index.html"
+}
+
+#svn
+svn_status(){
+	REPO_PATH="$EM_CORE_HOME/repository/default/"
+	if [ "$#" -ne 1 ]; then
+		ST_PATH=.
+	else
+		ST_PATH=$1
+	fi
+
+	echo path is "$ST_PATH"
+	svn st "$ST_PATH"
+}
+
+svn_del_all(){
+	svn_status $1 | grep ^\! | awk '{print $2}' | xargs svn delete  
+}
+svn_add_all(){
+	svn_status $1 | grep ^\? | awk '{print $2}' | xargs svn add
 }

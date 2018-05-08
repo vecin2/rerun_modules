@@ -6,6 +6,7 @@
 # Helpers
 # -------
 [[ -f ./functions.sh ]] && . ./functions.sh
+[[ -f ../lib/functions.sh ]] && . ../lib/functions.sh add-verb-to-home-perspective 
 
 # The Plan
 # --------
@@ -16,11 +17,14 @@ rr() {
 }
 # ------------------------------
 # Replace this test. 
-it_fails_without_a_real_test() {
+it_should_list_all_templates_in_folder() {
+	local templates_loc=./test-templates
+	mkdir -p $templates_loc
+	touch "$templates_loc/add_verb.sql"
 
-	rr sql: add-verb-to-home-pers
+	local menu=$(list_sql_templates $templates_loc)
 
-
+	test "1) add_verb" == "$menu"
     
 }
 # ------------------------------

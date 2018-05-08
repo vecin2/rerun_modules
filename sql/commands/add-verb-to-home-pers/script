@@ -15,6 +15,13 @@ rerun_options_parse "$@"
 
 # Command implementation
 # ----------------------
+templates_loc="$RERUN_MODULES"/sql/templates
+list_sql_templates $templates_loc
+file_content=$(cat $templates_loc/add_verb.sql)
+NAME=Jose
+
+sql_gen=$(eval "echo \"$file_content\"")
+echo "$sql_gen"
 
 # - - -
 # Put the command implementation here.

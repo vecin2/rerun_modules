@@ -23,6 +23,13 @@ fi
 # - - -
 # Your functions declared here.
 # - - -
-
+list_sql_templates(){
+	menu=( $1/* )
+	i=1
+	for m in ${menu[@]}
+	do
+		echo  "$(( i++ ))) $(basename ${m%.*})"
+	done |xargs -L3 |column -t
+}
 
 
