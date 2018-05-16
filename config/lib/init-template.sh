@@ -88,3 +88,23 @@ svn_del_all(){
 svn_add_all(){
 	svn_status $1 | grep ^\? | awk '{print $2}' | xargs svn add
 }
+
+#vm
+start_vm(){
+	MACHINE_NAME=$1
+	PARAMS=$2
+	IS_UP=$(vboxmanage showvminfo $MACHINE_NAME | grep -c "running (since")
+	if [ $IS_UP -eq 0 ]; then
+		VBoxManage startvm $MACHINE_NAME $PARAMS
+		echo Starting machine $MACHINE_NAME
+	fi
+}
+
+windows_start(){
+	start_vm "Win7-ENT" "--type sdl"
+}
+
+poweroff(){
+	MACHINE_NAME=$1
+	VBoxManage controlvm $MACHINE_NAME poweroff
+}
